@@ -1,12 +1,5 @@
-@font-face {
-	font-family: "TempleOS Mono";
-	src: url("./fonts/templeos_font.otf");
-	font-style: normal;
-	font-weight: normal;
-}
-
 * {
-	font-family: "Share Tech Mono", monospace;
+	font-family: "IBM Plex Mono", monospace;
 }
 
 body {
