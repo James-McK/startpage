@@ -28,7 +28,7 @@ h1 {
 	color: var(--accent);
 }
 
-h2 {
+#time {
 	color: var(--accent);
 	font-size: 35px;
 	position: relative;
@@ -39,7 +39,7 @@ a {
 	line-height: 1.9;
 }
 
-p {
+h2 {
 	color: var(--accent);
 	font-size: 35px;
 }
