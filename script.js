@@ -1,7 +1,7 @@
 // Big thanks to u/Teiem1 from reddit for refactoring the old code!
 
 // Change this to your liking
-let username = "grtcdr";
+let username = "James";
 // Counter that is incremented when the search engines are cycled through
 let se = 3;
 
