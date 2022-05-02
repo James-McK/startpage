@@ -36,7 +36,7 @@ async function main() {
 	get("goBtn").addEventListener("click", check_if_search_empty);
 	get("search").addEventListener("input", onTextChanged);
 	get("search").addEventListener("keydown", ({ key }) => {
-		if (key === "Enter") location = searchQuery;
+		if (key === "Enter") window.location.href = searchQuery;
 	});
 	setInterval(updateTime, 1000);
 }
