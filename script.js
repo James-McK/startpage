@@ -1,13 +1,43 @@
 // Name displayed in greeting
 let username = "James";
-// Counter that is incremented when the search engines are cycled through
-let se = 3;
+
+let searchQuery = "";
+
+const search_engines = [
+	{
+		name: "DuckDuckGo",
+		src: "ddg.svg",
+		term: "ddg",
+		action: "https://www.duckduckgo.com/",
+	},
+	{
+		name: "Google",
+		src: "goog.svg",
+		term: "g",
+		action: "https://www.google.com/search?q=",
+	},
+	{
+		name: "Reddit",
+		src: "reddit.svg",
+		term: "r",
+		action: "https://www.reddit.com/search?q=",
+	},
+	{
+		name: "YouTube",
+		src: "youtube.svg",
+		term: "yt",
+		action: "https://www.youtube.com/results?q=",
+	},
+];
 
 async function main() {
 	// Add event listeners
 	window.addEventListener("load", onPageLoad);
-	get("se_button").addEventListener("click", cycleSearchEngines);
-	get("go_btn").addEventListener("click", check_if_search_empty);
+	get("goBtn").addEventListener("click", check_if_search_empty);
+	get("search").addEventListener("input", onTextChanged);
+	get("search").addEventListener("keydown", ({ key }) => {
+		if (key === "Enter") location = searchQuery;
+	});
 	setInterval(updateTime, 1000);
 }
 
@@ -20,6 +50,28 @@ function onPageLoad() {
 
 	determineGreet(new Date().getHours());
 	get("time").innerHTML = time;
+}
+
+async function onTextChanged(event) {
+	let value = event.target.value;
+	let engine = checkForSearchModifier(value);
+
+	if (value.startsWith(engine.term)) value = value.substring(engine.term.length);
+	value = value.trim();
+
+	get("se_icon").src = "icons/" + engine.src;
+	get("search").name = "Searching with " + engine.name;
+
+	searchQuery = engine.action + value;
+	get("goBtn").href = searchQuery;
+}
+
+function checkForSearchModifier(search) {
+	for (let engine of search_engines) {
+		if (search.startsWith(engine.term + " ") || search === engine.term) return engine;
+	}
+	// If no match, use the default engine
+	return search_engines.filter((engine) => engine.name === "DuckDuckGo")[0];
 }
 
 /**
@@ -48,46 +100,11 @@ function determineGreet(hours) {
 }
 
 /**
- * Listens for click event in se_button, once clicked, se increments by one and cycleSearchEngines() is called to update the icon, placeholder, and form action
- */
-function cycleSearchEngines() {
-	se++;
-	const curData = search_engines[(se + 1) % search_engines.length];
-
-	get("se_icon").src = "icons/" + curData.src;
-	get("search").placeholder = "Searching with " + curData.placeholder;
-	get("search_eng_form").action = curData.action;
-}
-
-/**
  * Get the element with the given ID
  */
 function get(id) {
 	return document.getElementById(id);
 }
-
-const search_engines = [
-	{
-		src: "ddg.svg",
-		placeholder: "DuckDuckGo",
-		action: "https://www.duckduckgo.com/",
-	},
-	{
-		src: "goog.svg",
-		placeholder: "Google",
-		action: "https://www.google.com/search?q=",
-	},
-	{
-		src: "reddit.svg",
-		placeholder: "Reddit",
-		action: "https://www.reddit.com/search?q=",
-	},
-	{
-		src: "youtube.svg",
-		placeholder: "YouTube",
-		action: "https://www.youtube.com/results?q=",
-	},
-];
 
 // Run the main function
 main().catch(console.error);
