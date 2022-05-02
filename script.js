@@ -4,18 +4,22 @@ let username = "James";
 let se = 3;
 
 async function main() {
-	// Display the correct greeting based on the current time of day, and display the current time
-	window.addEventListener("load", (event) => {
-		let today = new Date();
-		let time = today.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-		determineGreet(new Date().getHours());
-		displayTime(time);
-	});
-
+	// Add event listeners
+	window.addEventListener("load", onPageLoad);
 	get("se_button").addEventListener("click", cycleSearchEngines);
 	get("go_btn").addEventListener("click", check_if_search_empty);
 	setInterval(updateTime, 1000);
+}
+
+/**
+ * Display the correct greeting based on the current time of day, and display the current time
+ */
+function onPageLoad() {
+	let today = new Date();
+	let time = today.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+	determineGreet(new Date().getHours());
+	get("time").innerHTML = time;
 }
 
 /**
@@ -27,17 +31,18 @@ function check_if_search_empty(event) {
 	}
 }
 
-// Called every 1000ms to update the time and display it
+/**
+ * Called every 1000ms to update the time and display it
+ */
 function updateTime() {
 	let today = new Date();
 	let time = today.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 	get("time").innerHTML = time;
 }
 
-function displayTime(time) {
-	get("time").innerHTML = time;
-}
-
+/**
+ * Display the correct greeting based on the given time of day
+ */
 function determineGreet(hours) {
 	get("greeting").innerText = `Good ${hours < 12 ? "Morning," : hours < 18 ? "Afternoon," : "Evening,"} ${username}!`;
 }
@@ -54,6 +59,9 @@ function cycleSearchEngines() {
 	get("search_eng_form").action = curData.action;
 }
 
+/**
+ * Get the element with the given ID
+ */
 function get(id) {
 	return document.getElementById(id);
 }
