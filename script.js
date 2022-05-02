@@ -50,6 +50,7 @@ function onPageLoad() {
 
 	determineGreet(new Date().getHours());
 	get("time").innerHTML = time;
+	get("search").focus();
 }
 
 async function onTextChanged(event) {
