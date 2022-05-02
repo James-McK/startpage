@@ -13,18 +13,10 @@ async function main() {
 		displayTime(time);
 	});
 
-	document.getElementById("go_btn").addEventListener("click", function (event) {
-		check_if_search_empty(event);
-	});
+	get("se_button").addEventListener("click", cycleSearchEngines);
+	get("go_btn").addEventListener("click", check_if_search_empty);
+	setInterval(updateTime, 1000);
 }
-
-/**
- * Listens for click event in se_button, once clicked, se increments by one and cycleSearchEngines() is called to update the icon, placeholder, and form action
- */
-document.getElementById("se_button").addEventListener("click", function () {
-	se++;
-	cycleSearchEngines(se);
-});
 
 /**
  * Do not allow searching if the user clicks "GO" when the search box is empty
@@ -36,25 +28,35 @@ function check_if_search_empty(event) {
 }
 
 // Called every 1000ms to update the time and display it
-setInterval(function () {
+function updateTime() {
 	let today = new Date();
 	let time = today.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-	document.getElementById("time").innerHTML = time;
-}, 1000);
-
-function displayTime(time) {
-	document.getElementById("time").innerHTML = time;
+	get("time").innerHTML = time;
 }
 
-const determineGreet = (hours) => (document.getElementById("greeting").innerText = `Good ${hours < 12 ? "Morning," : hours < 18 ? "Afternoon," : "Evening,"} ${username}!`);
+function displayTime(time) {
+	get("time").innerHTML = time;
+}
 
-const cycleSearchEngines = (se) => {
+function determineGreet(hours) {
+	get("greeting").innerText = `Good ${hours < 12 ? "Morning," : hours < 18 ? "Afternoon," : "Evening,"} ${username}!`;
+}
+
+/**
+ * Listens for click event in se_button, once clicked, se increments by one and cycleSearchEngines() is called to update the icon, placeholder, and form action
+ */
+function cycleSearchEngines() {
+	se++;
 	const curData = search_engines[(se + 1) % search_engines.length];
 
-	document.getElementById("se_icon").src = "icons/" + curData.src;
-	document.getElementById("search").placeholder = "Searching with " + curData.placeholder;
-	document.getElementById("search_eng_form").action = curData.action;
-};
+	get("se_icon").src = "icons/" + curData.src;
+	get("search").placeholder = "Searching with " + curData.placeholder;
+	get("search_eng_form").action = curData.action;
+}
+
+function get(id) {
+	return document.getElementById(id);
+}
 
 const search_engines = [
 	{
