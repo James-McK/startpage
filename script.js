@@ -8,25 +8,29 @@ const search_engines = [
 		name: "DuckDuckGo",
 		src: "ddg.svg",
 		term: "ddg",
-		action: "https://www.duckduckgo.com/",
+		url: "https://www.duckduckgo.com/",
+		q: "",
 	},
 	{
 		name: "Google",
 		src: "goog.svg",
 		term: "g",
-		action: "https://www.google.com/search?q=",
+		url: "https://www.google.com/",
+		q: "search?q=",
 	},
 	{
 		name: "Reddit",
 		src: "reddit.svg",
 		term: "r",
-		action: "https://www.reddit.com/search?q=",
+		url: "https://www.reddit.com/",
+		q: "search?q=",
 	},
 	{
 		name: "YouTube",
 		src: "youtube.svg",
 		term: "yt",
-		action: "https://www.youtube.com/results?q=",
+		url: "https://www.youtube.com/",
+		q: "results?q=",
 	},
 ];
 
@@ -55,16 +59,24 @@ function onPageLoad() {
 
 async function onTextChanged(event) {
 	let value = event.target.value;
-	let engine = checkForSearchModifier(value);
 
-	if (value.startsWith(engine.term)) value = value.substring(engine.term.length);
-	value = value.trim();
+	if (value) {
+		let engine = checkForSearchModifier(value);
 
-	get("se_icon").src = "icons/" + engine.src;
-	get("search").name = "Searching with " + engine.name;
+		if (value.startsWith(engine.term)) value = value.substring(engine.term.length);
+		value = value.trim();
 
-	searchQuery = engine.action + value;
-	get("goBtn").href = searchQuery;
+		get("se_icon").src = "icons/" + engine.src;
+		get("search").name = "Searching with " + engine.name;
+
+		if (value) searchQuery = engine.url + engine.q + value;
+		else searchQuery = engine.url;
+
+		get("goBtn").href = searchQuery;
+	} else {
+		searchQuery = "";
+		get("goBtn").removeAttribute("href");
+	}
 }
 
 function checkForSearchModifier(search) {
