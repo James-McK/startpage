@@ -9,7 +9,7 @@ const search_engines = [
 		src: "ddg.svg",
 		term: "ddg",
 		url: "https://www.duckduckgo.com/",
-		q: "",
+		q: "?q=",
 	},
 	{
 		name: "Google",
