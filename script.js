@@ -76,6 +76,7 @@ async function onTextChanged(event) {
 	} else {
 		searchQuery = "";
 		get("goBtn").removeAttribute("href");
+		get("se_icon").src = "./icons/search.svg";
 	}
 }
 
@@ -84,7 +85,9 @@ function checkForSearchModifier(search) {
 		if (search.startsWith(engine.term + " ") || search === engine.term) return engine;
 	}
 	// If no match, use the default engine
-	return search_engines.filter((engine) => engine.name === "DuckDuckGo")[0];
+	let dfEngine = { ...search_engines.filter((engine) => engine.name === "DuckDuckGo")[0] };
+	dfEngine.src = "search.svg";
+	return dfEngine;
 }
 
 /**
