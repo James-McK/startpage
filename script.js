@@ -32,6 +32,13 @@ const search_engines = [
 		url: "https://www.youtube.com/",
 		q: "results?q=",
 	},
+	{
+		name: "Arch Wiki",
+		src: "",
+		term: "arch",
+		url: "https://wiki.archlinux.org/",
+		q: "index.php?search=",
+	},
 ];
 
 async function main() {
