@@ -34,10 +34,17 @@ const search_engines = [
 	},
 	{
 		name: "Arch Wiki",
-		src: "",
+		src: undefined,
 		term: "arch",
 		url: "https://wiki.archlinux.org/",
 		q: "index.php?search=",
+	},
+	{
+		name: "Arch Packages",
+		src: undefined,
+		term: "pkg",
+		url: "https://archlinux.org/packages/",
+		q: "?q=",
 	},
 ];
 
