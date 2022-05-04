@@ -46,6 +46,13 @@ const search_engines = [
 		url: "https://archlinux.org/packages/",
 		q: "?q=",
 	},
+	{
+		name: "AUR",
+		src: undefined,
+		term: "aur",
+		url: "https://aur.archlinux.org/packages",
+		q: "?K=awesome",
+	},
 ];
 
 async function main() {
