@@ -77,11 +77,8 @@ async function main() {
  * Display the correct greeting based on the current time of day, and display the current time
  */
 function onPageLoad() {
-	let today = new Date();
-	let time = today.toTimeString([], { hour: "2-digit", minute: "2-digit" });
-
+	updateTime();
 	determineGreet(new Date().getHours());
-	get("time").innerHTML = time;
 	get("search").focus();
 }
 
@@ -91,7 +88,8 @@ async function onTextChanged(event) {
 	if (value) {
 		let engine = checkForSearchModifier(value);
 
-		if (value.startsWith(engine.term)) value = value.substring(engine.term.length);
+		if (value.startsWith(engine.term))
+			value = value.substring(engine.term.length);
 		value = value.trim();
 
 		get("se_icon").src = "icons/" + engine.src;
@@ -110,10 +108,14 @@ async function onTextChanged(event) {
 
 function checkForSearchModifier(search) {
 	for (let engine of search_engines) {
-		if (search.startsWith(engine.term + " ") || search === engine.term) return engine;
+		if (search.startsWith(engine.term + " ") || search === engine.term) {
+			return engine;
+		}
 	}
 	// If no match, use the default engine
-	let dfEngine = { ...search_engines.filter((engine) => engine.name === "DuckDuckGo")[0] };
+	let dfEngine = {
+		...search_engines.filter((engine) => engine.name === "DuckDuckGo")[0],
+	};
 	dfEngine.src = "search.svg";
 	return dfEngine;
 }
@@ -132,7 +134,11 @@ function check_if_search_empty(event) {
  */
 function updateTime() {
 	let today = new Date();
-	let time = today.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+	let time = today.toLocaleTimeString(["en-GB"], {
+		hour: "2-digit",
+		minute: "2-digit",
+		timeZone: "Europe/Belfast",
+	});
 	get("time").innerHTML = time;
 }
 
