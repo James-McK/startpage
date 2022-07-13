@@ -78,7 +78,7 @@ async function main() {
  */
 function onPageLoad() {
 	let today = new Date();
-	let time = today.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+	let time = today.toTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 	determineGreet(new Date().getHours());
 	get("time").innerHTML = time;
